@@ -26,7 +26,6 @@ class MyHomePage extends StatelessWidget{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(IconData(0xe17c, fontFamily: 'MaterialIcons')),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -68,30 +67,30 @@ class Buttons extends ConsumerWidget {
             },
             child: const Icon(Icons.color_lens),
           ),
-          // FloatingActionButton(
-          //   onPressed: (){
-          //     ref.read(counterProvider.notifier).resetCounter();
-          //   },
-          //   child: const Icon(Icons.exposure_zero),
-          // ),
-          // FloatingActionButton(
-          //   onPressed: (){
-          //     ref.read(counterProvider.notifier).decrementCounter();
-          //   },
-          //   child: const Icon(Icons.remove),
-          // ),
-          // FloatingActionButton(
-          //   onPressed: (){
-          //     ref.read(counterProvider.notifier).incrementCounter();
-          //   },
-          //   child: const Icon(Icons.add),
-          // ),
-          // FloatingActionButton(
-          //   onPressed: (){
-          //     ref.read(counterProvider.notifier).multiplyCounter();
-          //   },
-          //   child: const Icon(Icons.close),
-          //),
+          FloatingActionButton(
+            onPressed: (){
+              ref.read(counterProvider.notifier).resetCounter();
+            },
+            child: const Icon(Icons.exposure_zero),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              ref.read(counterProvider.notifier).decrementCounter();
+            },
+            child: const Icon(Icons.remove),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              ref.read(counterProvider.notifier).incrementCounter();
+            },
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              ref.read(counterProvider.notifier).multiplyCounter();
+            },
+            child: const Icon(Icons.close),
+          ),
         ],
       );
   }
