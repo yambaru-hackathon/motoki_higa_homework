@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:main/count_model.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +34,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final random = Random();
+  Color? color;
+
+  @override
+  void initState() {
+    super.initState();
+    color = randomColor;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,46 +52,90 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Row(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CountBody(name:'first'),
-            SizedBox(width: 20),
-            CountBody(name:'second'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    CountBody(name:'first', number: 1, color: color,),
+                    Builder(
+                      builder: (context) {
+                        final model = Provider.of<CountModel>(context);
+                        return FloatingActionButton(
+                          onPressed: (){ 
+                            model.incrementCounter();
+                            changeColor();
+                          },
+                          tooltip: 'Increment',
+                          child: const Icon(Icons.add),
+                        );
+                      }
+                    ),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    CountBody(name:'second', number: 2, color: color,),
+                    Builder(
+                      builder: (context) {
+                        final model = Provider.of<CountModel>(context);
+                        return FloatingActionButton(
+                          onPressed: (){ 
+                            model.incrementCounter2();
+                            changeColor();
+                          },
+                          tooltip: 'Increment',
+                          child: const Icon(Icons.add),
+                        );
+                      }
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
-        ),
-        floatingActionButton: Builder(
-          builder: (context) {
-            final model = Provider.of<CountModel>(context);
-            return FloatingActionButton(
-              onPressed: model.incrementCounter,
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            );
-          }
         ),
       ),
     );
   }
+  Color get randomColor => Color.fromARGB(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
+
+  void changeColor() => setState(() => color = randomColor);
 }
 
 class CountBody extends StatelessWidget {
-  CountBody({super.key, required this.name});
+  CountBody({super.key, required this.name, required this.number, required this.color});
 
   String name;
+  int number;
+  Color? color;
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<CountModel>(context);
+    int counter = 0;
+
+    if (number == 1){
+      counter = model.counter;
+    }
+    else if (number == 2){
+      counter = model.counter2;
+    }
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             name,
+            style: TextStyle(color: color),
           ),
           Text(
-            '${model.counter}',
+            '${counter}',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
